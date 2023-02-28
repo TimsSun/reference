@@ -3,7 +3,6 @@ Markdown 备忘清单
 
 这是 Markdown 语法的快速参考备忘单。
 
-
 Markdown 快速参考
 ----
 
@@ -29,7 +28,6 @@ Header 1
 Header 2
 --------
 ```
-
 
 ### 块引用
 
@@ -64,6 +62,7 @@ Header 2
 + Item 1
 + Item 2
 ```
+
 或者**任务**列表
 
 ```markdown
@@ -132,11 +131,13 @@ ___
 
 ### 代码
 
-~~~markdown
+```markdown
+
 ```javascript
 console.log("This is a block code")
 ```
-~~~
+
+```
 
 ```markdown
 ~~~css
@@ -144,11 +145,9 @@ console.log("This is a block code")
 ~~~
 ```
 
-
 ```markdown
     4 空格缩进做一个代码块
 ```
-
 
 #### 内联代码
 
@@ -159,19 +158,27 @@ console.log("This is a block code")
 ### 表格
 
 ```markdown
-|     左栏   |     中间栏     |  右栏     |
-| ----------| ------------ | --------- |
-| 单元格 1   |   居中        |     $1600 |
-| 单元格 2   |   单元格 3    |       $12 |
+| 左栏     | 中间栏   | 右栏  |
+| -------- | -------- | ----- |
+| 单元格 1 | 居中     | $1600 |
+| 单元格 2 | 单元格 3 | $12   |
 ```
 
 简单的风格
 
 ```markdown
- 左栏 | 中间栏 | 右栏
-:-------: | :-------:|:-------:
-单元格 1   | 居中      |    $1600
-单元格 2   | 单元格 3  |     $12
+左栏     | 中间栏   | 右栏  
+-------- | -------- | -----
+单元格 1 | 居中     | $1600
+单元格 2 | 单元格 3 | $12 
+```
+
+增加 `:` 改变文字对齐方式
+
+```markdown
+左栏     |  中间栏  |   右栏 
+:------- | :------: | -----: 
+左对齐   |   居中   | 右对齐
 ```
 
 Markdown 表格生成器：[tableconvert.com](https://tableconvert.com/)
@@ -223,24 +230,24 @@ Markdown 表格生成器：[tableconvert.com](https://tableconvert.com/)
 
 | 字符 | 转义 | 描述 |
 |------------|--------|-------------|
-| \\         | \\\\   | backslash 反斜杠             |
-| \`         | \\\`   | backtick 反引号              |
-| \*         | \\\*   | asterisk 星号                |
-| \_         | \\\_   | underscore 下划线            |
-| \{\}       | \\\{\} | curly braces 花括号          |
-| \[\]       | \\\[\] | square brackets 方括号       |
-| \(\)       | \\\(\) | parentheses 圆括号           |
-| \#         | \\\#   | hash mark 哈希标记           |
-| \+         | \\\+   | plus sign 加号               |
-| \-         | \\\-   | minus sign \(hyphen\) 减号(连字符) |
-| \.         | \\\.   | dot 点                      |
-| \!         | \\\!   | exclamation mark 感叹号      |
+| <pur>\\</pur>         | \\\\   | backslash 反斜杠             |
+| <pur>\`</pur>         | \\\`   | backtick 反引号              |
+| <pur>\*</pur>         | \\\*   | asterisk 星号                |
+| <pur>\_</pur>         | \\\_   | underscore 下划线            |
+| <pur>\{\}</pur>       | \\\{\} | curly braces 花括号          |
+| <pur>\[\]</pur>       | \\\[\] | square brackets 方括号       |
+| <pur>\(\)</pur>       | \\\(\) | parentheses 圆括号           |
+| <pur>\#</pur>         | \\\#   | hash mark 哈希标记           |
+| <pur>\+</pur>         | \\\+   | plus sign 加号               |
+| <pur>\-</pur>         | \\\-   | minus sign \(hyphen\) 减号(连字符) |
+| <pur>\.</pur>         | \\\.   | dot 点                      |
+| <pur>\!</pur>         | \\\!   | exclamation mark 感叹号      |
 
 ### 行内 HTML 元素
 <!--rehype:wrap-class=col-span-2-->
 
 ```html
-目前只支持部分段内 HTML 元素效果，包括 <kdb>, <b>, <i>, <em>, <sup>, <sub>, <br>
+目前只支持部分段内 HTML 元素效果，包括 <kbd>, <b>, <i>, <em>, <sup>, <sub>, <br>
 ```
 
 另见

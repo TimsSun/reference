@@ -11,23 +11,29 @@ Git 备忘清单
 创建一个新的本地存储库
 
 ```shell
-$ git init [project name]
+$ git init [项目名称]
 ```
 
-克隆存储库
+克隆存储库(代码仓库)
 
 ```shell
-$ git clone git_url
+$ git clone <git_url>
 ```
 
 将存储库克隆到指定目录
 
 ```shell
-$ git clone git_url 指定目录
+$ git clone <git_url> 指定目录
+```
+
+将存储库克隆到指定目录，并指定分支
+
+```shell
+$ git clone <git_url> -b <分支名称> 指定目录
 ```
 
 ### 做出改变
-<!--rehype:wrap-class=row-span-2-->
+<!--rehype:wrap-class=row-span-3-->
 
 在工作目录中**显示**修改后的文件，为您的下一次提交暂存
 
@@ -89,8 +95,8 @@ $ git diff --staged
 $ git rebase [branch]
 ```
 
-
 ### 配置
+<!--rehype:wrap-class=row-span-2-->
 
 设置将附加到您的提交和标签的名称
 
@@ -116,7 +122,20 @@ $ git config --global color.ui auto
 $ git config --global --edit
 ```
 
+显示本地 `repo` 配置设置
+
+```shell
+$ git config --list
+```
+
+删除全局设置
+
+```bash
+$ git config --global --unset <entry-name>
+```
+
 ### 使用分支
+<!--rehype:wrap-class=row-span-3-->
 
 列出所有本地分支
 
@@ -130,25 +149,25 @@ $ git branch
 $ git branch -av
 ```
 
-切换到 my_branch，并更新工作目录
+切换到 `my_branch`，并更新工作目录
 
 ```shell
 $ git checkout my_branch
 ```
 
-创建一个名为 new_branch 的新分支
+创建一个名为 `new_branch` 的新分支
 
 ```shell
 $ git checkout -b new_branch
 ```
 
-删除名为 my_branch 的分支
+删除名为 `my_branch` 的分支
 
 ```shell
 $ git branch -d my_branch
 ```
 
-将分支 A 合并到分支 B
+将分支 `A` 合并到分支 `B`
 
 ```shell
 $ git checkout branchB
@@ -161,7 +180,32 @@ $ git merge branchA
 $ git tag my_tag
 ```
 
+从远程分支中创建并切换到本地分支
+
+```shell
+$ git checkout -b <branch-name> origin/<branch-name>
+```
+<!--rehype:className=wrap-text-->
+
+### 临时提交
+
+```shell
+# 保存已修改和分阶段的更改
+$ git stash
+# 列出隐藏文件更改的堆栈顺序
+$ git stash list
+# 从存储堆栈顶部编写工作
+$ git stash pop
+# 丢弃存储堆栈顶部的更改
+$ git stash drop
+# 回到某个 stash 的状态
+$ git stash apply <stash@{n}>
+# 删除所有的 stash
+$ git stash clear
+```
+
 ### 观察你的存储库
+<!--rehype:wrap-class=row-span-2-->
 
 显示当前活动分支的提交历史
 
@@ -193,7 +237,70 @@ $ git diff branchB...branchA
 $ git show [SHA]
 ```
 
+### 忽略文件 .gitignore
+<!--rehype:wrap-class=row-span-4-->
+
+文件 `.gitignore` 指定了 `Git` 应该忽略的 **未跟踪的** 文件
+
+:- | :-
+:- | :-
+行首 `#` | 全行注释，不支持行尾类注释 _(转义 `\#`)_
+行首 **`!`** | 否定模式 _(转义 `\!`)_
+`**` | 匹配任意路径
+`*` | 匹配任意多个字符
+`?` | 匹配任意一个字符
+`doc/**` | 匹配 `doc` 文件夹下的全部内容
+`doc/**/a` | 匹配任意深度路径下的 `a` 文件或文件夹
+`/` | 表示路径分隔符，不区分操作系统
+`/` 结尾 | 仅会匹配文件夹，否则会匹配文件和文件夹
+空行 | 不匹配任何文件
+行尾空格 | 默认被忽略，可使用`\`进行转义
+行首空格 | 被正常处理，不会被忽略
+
+当前 `.gitignore` 文件定义规则的优先级高于上级路径 `.gitignore` 定义规则的优先级；后定义的规则优先级高于前面定义规则的优先级
+
+```gitignore showLineNumbers
+# 忽略当前目录logs文件夹下的全部内容
+/logs/
+/logs/*
+/logs/**
+# 上述几条规则等效
+
+# 忽略 Mac 系统文件，包括任意子路径下的同名文件（夹）
+.DS_store
+
+# 忽略 node_modules 文件夹，包括任意子路径下的同名文件夹
+node_modules/
+
+# 忽略任意子路径下build、target文件夹，
+# 但不忽略src/main、src/test下的build、target文件夹
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# 使用 ! 重新包含指定文件（夹）
+!logs/.gitkeep
+```
+<!--rehype:className=wrap-text-->
+
+### 重构文件名
+
+```bash
+# 从工作目录中删除文件并暂存删除
+git rm <filename>
+
+# 从版本控制中删除文件但在本地保留文件
+git rm --cached <filename>
+
+# 更改文件名并准备提交
+git mv <filename-orig> <filename-renamed>
+```
+
 ### 同步
+<!--rehype:wrap-class=row-span-2-->
 
 从该 Git 远程获取所有分支
 
@@ -230,6 +337,7 @@ $ git cherry-pick [commit_id]
 ```
 
 ### 远程
+<!--rehype:wrap-class=row-span-2-->
 
 添加一个 git URL 作为别名
 
@@ -261,32 +369,6 @@ $ git remote rm [remote repo name]
 $ git remote set-url origin [git_url]
 ```
 
-### 临时提交
-
-保存已修改和分阶段的更改
-
-```shell
-$ git stash
-```
-
-列出隐藏文件更改的堆栈顺序
-
-```shell
-$ git stash list
-```
-
-从存储堆栈顶部编写工作
-
-```shell
-$ git stash pop
-```
-
-丢弃存储堆栈顶部的更改
-
-```shell
-$ git stash drop
-```
-
 ### 跟踪路径更改
 
 从项目中删除文件并暂存删除以进行提交
@@ -307,21 +389,51 @@ $ git mv [existing-path] [new-path]
 $ git log --stat -M
 ```
 
-### 忽略文件
+### git 配置 ssh 代理
+<!--rehype:wrap-class=col-span-2-->
 
-```gitignore
-/logs/*
-# “！” 意思是不要忽视
-!logs/.gitkeep
-# 忽略 Mac 系统文件
-.DS_store
-# 忽略 node_modules 文件夹
-node_modules
-# 忽略 SASS 配置文件
-.sass-cache
+```bash
+$ cat ~/.ssh/config
+Host gitlab.com
+# 直接使用 sh**socks 提供的 socks5 代理端口
+ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p 
+
+Host github.com
+ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p    
+```
+<!--rehype:className=wrap-text-->
+
+### .gitattributes
+
+```ini
+# 设置默认行为，以防人们没有设置 core.autocrlf
+* text=auto
+# 明确声明您希望始终规范化并在结帐时
+# 转换为本机行结尾的文本文件
+*.c text
+*.h text
+# 声明在结帐时始终以 CRLF 行结尾的文件
+*.sln text eol=crlf
+# 表示所有真正二进制且不应修改的文件
+*.png binary
+*.jpg binary
 ```
 
-`.gitignore` 文件指定了 Git 应该忽略的未跟踪的文件
+[计入存储库语言](https://github.com/github/linguist/blob/master/docs/overrides.md#using-gitattributes)
+
+```ini
+# 标记或取消标记要根据存储库的语言统计数据而
+# 忽略或默认隐藏差异的路径
+search/index.json linguist-generated=true
+# 以下属性统计 SQL 文件
+*.sql linguist-detectable=true
+# 从统计信息中排除
+docs/formatter.rb linguist-documentation=false
+# 将它们从统计信息中排除
+special-vendored-path/* linguist-vendored
+# 将所有 .rb 文件检测为 Java 文件
+*.rb linguist-language=Java
+```
 
 Git 技巧
 ------
@@ -329,15 +441,20 @@ Git 技巧
 ### 重命名分支
 
 - **重命名**为`new`
+
   ```shell
   $ git branch -m <new>
   $ git branch -m <old> <new> #重命名分支  
   ```
+
 - **推送**并重置
+
   ```shell
   $ git push origin -u <new>
   ```
+
 - **删除**远程分支
+
   ```shell
   $ git push origin --delete <old> #方法1
   $ git push origin :oldBranchName #方法2
@@ -380,7 +497,7 @@ $ git branch -vv
 $ git checkout -
 ```
 
-只获取远程分支
+只获取所有远程分支
 
 ```shell
 $ git branch -r
@@ -515,12 +632,6 @@ $ git branch --merged master | grep -v '^\*\|  master' | xargs -n 1 git branch -
 ```
 <!--rehype:className=wrap-text-->
 
-### 中文乱码的解决方案
-
-```shell
-$ git config --global core.quotepath false
-```
-
 ### 把 A 分支的某一个 commit，放到 B 分支上
 
 ```shell
@@ -529,3 +640,414 @@ $ git checkout <B>
 # 将 A 分支 <hash-id> 的内容 pick 到 B 分支
 $ git cherry-pick <hash-id>
 ```
+
+### 回到远程仓库的状态
+
+```bash
+$ git fetch --all && git reset --hard origin/master
+```
+<!--rehype:className=wrap-text-->
+
+抛弃本地所有的修改，回到远程仓库的状态
+
+### 重设第一个 commit
+
+```bash
+$ git update-ref -d HEAD
+```
+
+把所有的改动都重新放回工作区，并**清空所有的 commit**，这样就可以重新提交第一个 `commit` 了
+
+### 查看冲突文件列表
+
+```bash
+$ git diff --name-only --diff-filter=U
+```
+
+### 展示工作区的冲突文件列表
+<!--rehype:wrap-class=row-span-2-->
+
+输出工作区和暂存区的 different (不同)。
+
+```bash
+$ git diff
+```
+
+还可以展示本地仓库中任意两个 commit 之间的文件变动：
+
+```bash
+$ git diff <commit-id> <commit-id>
+```
+
+### 展示暂存区和最近版本的不同
+
+```bash
+git diff --cached
+```
+
+### 中文乱码的解决方案
+
+```shell
+$ git config --global core.quotepath false
+```
+
+### 展示暂存区、工作区和最近版本的不同
+
+```bash
+$ git diff HEAD
+```
+
+输出工作区、暂存区 和本地最近的版本(commit)的different(不同)。
+
+### 删除已经合并到 master 的分支
+
+```bash
+$ git branch --merged master | grep -v '^\*\|  master' | xargs -n 1 git branch -d
+```
+<!--rehype:className=wrap-text-->
+
+### 关联远程分支
+<!--rehype:wrap-class=row-span-2-->
+
+```bash
+$ git branch -u origin/mybranch
+```
+
+或者在 `push` 时加上 `-u` 参数
+
+```bash
+git push origin/mybranch -u
+```
+
+关联之后，`git branch -vv` 就可以展示关联的远程分支名了, 同时推送到远程仓库直接：`git push`，不需要指定远程仓库
+
+### 查看远程分支和本地分支的对应关系
+
+```bash
+$ git remote show origin
+```
+
+### 展示当前分支的最近的 tag
+
+```bash
+$ git describe --tags --abbrev=0
+```
+
+### 查看某段代码是谁写的
+
+```bash
+$ git blame <file-name>
+```
+
+`blame` 的意思为`责怪`，你懂的。
+
+### 修改作者名
+
+```bash
+$ git commit --amend --author='Author Name <email@address.com>'
+```
+<!--rehype:className=wrap-text-->
+
+### 修改远程仓库的 url
+
+```bash
+$ git remote set-url origin <URL>
+```
+
+### 增加远程仓库
+
+```bash
+$ git remote add origin <remote-url>
+```
+<!--rehype:className=wrap-text-->
+
+### 列出所有远程仓库
+
+```bash
+$ git remote -v
+```
+
+### 查看两个星期内的改动
+
+```bash
+$ git whatchanged --since='2 weeks ago'
+```
+
+### 从 stash 中拿出某个文件的修改
+
+```bash
+$ git checkout <stash@{n}> -- <file-path>
+```
+<!--rehype:className=wrap-text-->
+
+### 展示所有 tracked 的文件
+
+```bash
+$ git ls-files -t
+```
+
+### 展示所有 untracked 的文件
+
+```bash
+$ git ls-files --others
+```
+
+### 展示所有忽略的文件
+
+```bash
+$ git ls-files --others -i --exclude-standard
+```
+<!--rehype:className=wrap-text-->
+
+### 把某一个分支导出成一个文件
+
+```bash
+$ git bundle create <file> <branch-name>
+```
+
+### 从包中导入分支
+<!--rehype:wrap-class=row-span-2-->
+
+```bash
+$ git clone repo.bundle <repo-dir> -b <branch-name>
+```
+<!--rehype:className=wrap-text-->
+
+新建一个分支，分支内容就是上面 `git bundle create` 命令导出的内容
+
+### 执行 rebase 之前自动 stash
+
+```bash
+$ git rebase --autostash
+```
+
+### 从远程仓库根据 ID，拉下某一状态，到本地分支
+
+```bash
+$ git fetch origin pull/<id>/head:<branch-name>
+```
+<!--rehype:className=wrap-text-->
+
+### 详细展示一行中的修改
+
+```bash
+$ git diff --word-diff
+```
+
+### 清除 gitignore 文件中记录的文件
+
+```bash
+$ git clean -X -f
+```
+
+### 展示忽略的文件
+
+```bash
+$ git status --ignored
+```
+
+### commit 历史中显示 Branch1 有的但是 Branch2 没有 commit
+
+```bash
+$ git log Branch1 ^Branch2
+```
+
+### 在 commit log 中显示 GPG 签名
+
+```bash
+$ git log --show-signature
+```
+
+### 新建并切换到新分支上，同时这个分支没有任何 commit
+
+```bash
+$ git checkout --orphan <branch-name>
+```
+
+相当于保存修改，但是重写 commit 历史
+
+### 展示任意分支某一文件的内容
+
+```bash
+$ git show <branch-name>:<file-name>
+```
+
+### 配置 http 和 socks 代理
+<!--rehype:wrap-class=row-span-4-->
+
+```bash
+# 查看代理
+$ git config --global http.proxy
+$ git config --global https.proxy
+$ git config --global socks.proxy
+
+# 设置代理
+# 适用于 privoxy 将 socks 协议转为 http 协议的 http 端口
+$ git config --global http.proxy http://127.0.0.1:1080
+$ git config --global https.proxy http://127.0.0.1:1080
+$ git config --global socks.proxy 127.0.0.1:1080
+
+# 取消代理
+$ git config --global --unset http.proxy
+$ git config --global --unset https.proxy
+$ git config --global --unset socks.proxy
+
+# 只对 github.com 设置代理
+$ git config --global http.https://github.com.proxy socks5://127.0.0.1:1080
+$ git config --global https.https://github.com.proxy socks5://127.0.0.1:1080
+
+# 取消 github.com 代理
+$ git config --global --unset http.https://github.com.proxy
+$ git config --global --unset https.https://github.com.proxy
+```
+
+### clone 最新一次提交
+
+```bash
+$ git clone --depth=1 https://github.com/user/repo.git
+```
+
+只会 `clone` 最近一次提交，将减少 `clone` 时间
+
+### 忽略某个文件的改动
+<!--rehype:wrap-class=row-span-2-->
+
+关闭 track 指定文件的改动，也就是 Git 将不会在记录这个文件的改动
+
+```bash
+git update-index --assume-unchanged path/to/file
+```
+<!--rehype:className=wrap-text-->
+
+恢复 track 指定文件的改动
+
+```bash
+git update-index --no-assume-unchanged path/to/file
+```
+<!--rehype:className=wrap-text-->
+
+### 以最后提交的顺序列出所有 Git 分支
+
+```bash
+git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads
+```
+
+最新的放在最上面
+
+### 在 commit log 中查找相关内容
+
+```bash
+git log --all --grep='<given-text>'
+```
+
+通过 grep 查找，given-text: 所需要查找的字段
+
+### 把暂存区的指定 file 放到工作区中
+
+```bash
+git reset <file-name>
+```
+
+不添加参数，默认是 `-mixed`
+
+### 配置 SSH 协议代理
+
+```shell
+# 对于使用 git@ 协议的，可以配置 socks5 代理
+# macOS 系统编辑 ~/.ssh/config 文件，添加这几行，设置 github 代理
+Host github.com
+  ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p
+```
+<!--rehype:className=wrap-text-->
+
+git 代码统计
+---
+
+### 查看 git 上的个人代码量
+
+- `username` 需要改成自己的
+
+```bash
+git log --author="username" --pretty=tformat: --numstat | awk \
+'{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -
+```
+
+### 统计每个人增删行数
+
+```bash
+git log --format='%aN' | sort -u |\
+  while read name; do echo -en "$name\t";\
+  git log --author="$name" --pretty=tformat: --numstat | awk \
+  '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
+```
+
+### 查看仓库提交者排名
+
+这里是排名前十，也可以更改排名
+
+```bash
+git log --pretty='%aN' | sort | uniq -c | sort -k1 -n -r | head -n 10
+```
+
+### 提交数统计
+
+```bash
+git log --oneline | wc -l
+```
+
+Conventional Commmits
+----
+
+### 格式
+<!--rehype:wrap-class=col-span-3-->
+
+```text
+<type>(<scope>): <short summary>
+  │       │             │
+  │       │             └─⫸ 紧凑简短的描述，无需大写，也不需要用句号结尾
+  │       │
+  │       └─⫸ Commit 范围: animations|bazel|benchpress|common|compiler|compiler-cli|core|
+  │                          elements|forms|http|language-service|localize|platform-browser|
+  │                          platform-browser-dynamic|platform-server|router|service-worker|
+  │                          upgrade|zone.js|packaging|changelog|docs-infra|migrations|ngcc|ve|
+  │                          devtools....
+  │
+  └─⫸ Commit 类型: build|ci|doc|docs|feat|fix|perf|refactor|test
+                    website|chore|style|type|revert
+```
+
+### 常用
+<!--rehype:wrap-class=row-span-1-->
+
+|   类型   |  描述 |
+| ----------|------------ |
+| `feat:`   | 新特性     |
+| `fix(scope):`   | 修复 scope 中的 Bug |
+| `feat!:` / `feat(scope)!:` | breaking change /  重构 API |
+| `chore(deps):` | 更新依赖 |
+<!--rehype:className=left-align-->
+
+### Commit 类型
+<!--rehype:wrap-class=col-span-2-->
+
+|   类型   |  描述 |
+| ----------|------------ |
+| `build:` | 变更影响的是**构建系统**或者**外部依赖** (如: gulp, npm) |
+| `ci:` | 修改了 CI 配置文件或脚本 (如: Github Action, Travis) |
+| `chore:` | **【重要】** 变更不影响源代码或测试（如更新了辅助工具、库等) |
+| `docs:` | 只修改了文档 |
+| `feat:` | **【重要】** 一个新特性 |
+| `fix:` | **【重要】** 修复了一个 Bug |
+| `perf:` | 增强性能的代码变更 |
+| `refactor:` | 并非修复 Bug 或添加新特性的代码变更 |
+| `revert:` | 回退代码 |
+| `style:` | 变更不影响一些有意义的代码 (如: 删除空格、格式化代码、添加分号等) |
+| `test:` | 添加测试代码或修正已有的测试 |
+<!--rehype:className=left-align-->
+
+另见
+---
+
+- [最常用的 git 提示和技巧](https://github.com/git-tips/tips)
+- [Conventional Commits 官方网站](https://www.conventionalcommits.org/zh-hans/v1.0.0/) _(conventionalcommits.org)_
+- [Conventional Commits Cheatsheet](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3) _(gist.github.com)_

@@ -1,18 +1,24 @@
 React 备忘清单
 ===
 
-适合初学者的综合 React 备忘清单。
+[![NPM version](https://img.shields.io/npm/v/react.svg?style=flat)](https://npmjs.org/package/react)
+[![Downloads](https://img.shields.io/npm/dm/react.svg?style=flat)](https://www.npmjs.com/package/react)
+[![Repo Dependents](https://badgen.net/github/dependents-repo/facebook/react)](https://github.com/facebook/react/network/dependents)
+[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/facebook/react)
 
+适合初学者的综合 React 备忘清单
+<!--rehype:style=padding-top: 12px;-->
 
 入门
 ----
 
 ### 介绍
 
-React 是一个用于构建用户界面的 JavaScript 库。
+React 是一个用于构建用户界面的 JavaScript 库
 
 - [React 官方文档](https://reactjs.org/) _(reactjs.org)_
 - [Styled Components 备忘清单](./styled-components.md) _(jaywcjlove.github.io)_
+- [TypeScript JSX 备忘清单](./typescript.md#jsx) _(jaywcjlove.github.io)_
 
 ```js
 import {createRoot} from 'react-dom/client'
@@ -59,7 +65,6 @@ import World, { Hello } from './hello.js';
 
 使用 `import` 导入 `Hello` 组件，在示例中使用。
 
-
 ### React 组件中的 CSS
 
 ```jsx {2,5}
@@ -81,7 +86,6 @@ export const Student = (
   <div style={divStyle}></div>
 );
 ```
-
 
 ### 属性
 
@@ -112,7 +116,6 @@ class Student extends React.Component {
 
 `class` 组件使用 `this.props` 访问传递给组件的属性。
 
-
 ### Children
 <!--rehype:wrap-class=row-span-2-->
 
@@ -138,7 +141,7 @@ function AlertBox(props) {
 }
 ```
 
-----
+-----
 
 ```jsx
 {props.children}
@@ -158,7 +161,7 @@ class AlertBox extends React.Component {
 }
 ```
 
-----
+-----
 
 ```jsx
 {this.props.children}
@@ -297,7 +300,7 @@ function Student() {
 
 ### Portals
 
-React 并*没有*创建一个新的 `div`。它只是把子元素渲染到 `domNode` 中。`domNode` 是一个可以在任何位置的有效 DOM 节点。
+React 并_没有_创建一个新的 `div`。它只是把子元素渲染到 `domNode` 中。`domNode` 是一个可以在任何位置的有效 DOM 节点。
 
 ```jsx
 render() {
@@ -438,7 +441,7 @@ function CustomTextInput(props) {
 </div>
 ```
 
-----
+-----
 
 - [识别不安全的生命周期](https://zh-hans.reactjs.org/docs/strict-mode.html#identifying-unsafe-lifecycles)
 - [关于使用过时字符串 ref API 的警告](https://zh-hans.reactjs.org/docs/strict-mode.html#warning-about-legacy-string-ref-api-usage)
@@ -754,7 +757,7 @@ export default function Weather(props) {
 }
 ```
 
-----
+-----
 
 ```js
 {isShow && <div>内容</div>}
@@ -859,7 +862,6 @@ class Welcome extends React.Component {
 :- | -
 `this.props` | 组件接受参数
 `this.state` | 组件内状态
-
 
 ### Pure 组件
 
@@ -1003,7 +1005,7 @@ Menu.Item = ({ children }) => (
 );
 ```
 
-----
+-----
 
 ```jsx
 <Menu>
@@ -1330,7 +1332,7 @@ PropTypes 属性类型检查
 import PropTypes from 'prop-types'
 ```
 
-----
+-----
 
 :- | -
 :- | -
@@ -1353,7 +1355,6 @@ import PropTypes from 'prop-types'
 :- | -
 `oneOf(any)` | 枚举类型
 `oneOfType([type])` | 几种类型中的任意一个类型
-
 
 #### _数组 Array_
 

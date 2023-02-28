@@ -1,7 +1,13 @@
 Lerna 备忘清单
 ===
 
-本备忘单旨在快速理解 [Lerna v6](https://github.com/lerna/lerna) 所涉及的主要概念，显示了它的常用命令使用清单。
+[![NPM version](https://img.shields.io/npm/v/lerna.svg?style=flat)](https://www.npmjs.com/package/lerna)
+[![Downloads](https://img.shields.io/npm/dm/lerna.svg?style=flat)](https://www.npmjs.com/package/lerna)
+[![Repo Dependents](https://badgen.net/github/dependents-repo/lerna/lerna/nest)](https://github.com/lerna/lerna/nest/network/dependents)
+[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/lerna/lerna/nest)
+
+本备忘单旨在快速理解 [Lerna v6](https://github.com/lerna/lerna) 所涉及的主要概念，显示了它的常用命令使用清单
+<!--rehype:style=padding-top: 12px;-->
 
 入门
 ----
@@ -199,7 +205,7 @@ $ lerna publish --canary preminor
 }
 ```
 
-----
+---
 
 :- | :-
 :- | :-
@@ -239,7 +245,7 @@ $ lerna version -m "chore(doc): publish %v"
 - `prerelease` 预发行
 <!--rehype:className=cols-2-->
 
-----
+---
 
 :- | :-
 :- | :-
@@ -310,7 +316,6 @@ $ lerna bootstrap --hoist
 `--no-ci` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--no-ci) | 在 `CI` 环境中调用 `npm ci` 而不是 `npm install`
 `--force-local` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--force-local) | 此标志会导致引导命令始终对本地依赖项进行符号链接，而不管匹配的版本范围如何
 <!--rehype:className=style-list-arrow-->
-
 
 ### info 本地环境信息
 
@@ -410,9 +415,9 @@ lerna la
 
 :- | :-
 :- | :-
-`--conventional-graduate` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate) 
-`--force-publish` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--force-publish) 
-`--ignore-changes` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--ignore-changes) 
+`--conventional-graduate` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate)
+`--force-publish` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--force-publish)
+`--ignore-changes` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--ignore-changes)
 `--include-merged-tags` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--include-merged-tags)
 
 ### init
@@ -424,13 +429,13 @@ lerna la
 - 如果不存在 `.gitignore`，则生成一个忽略文件
 <!--rehype:className=style-timeline-->
 
-----
+---
 
 ```shell
 $ lerna init --independent
 ```
 
-----
+---
 
 :- | :-
 :- | :-
@@ -526,7 +531,6 @@ $ lerna diff package-name # 区分一个特定的包
 ```
 
 类似于 `lerna changed`，此命令运行 `git diff`
-
 
 ### clean
 

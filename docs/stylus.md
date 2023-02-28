@@ -1,7 +1,13 @@
 Stylus 备忘清单
 ===
 
-本备忘单旨在快速理解 [stylus](https://github.com/stylus/stylus) 所涉及的主要概念，显示了它的常用方法使用清单。
+[![NPM version](https://img.shields.io/npm/v/stylus.svg?style=flat)](https://npmjs.org/package/stylus)
+[![Downloads](https://img.shields.io/npm/dm/stylus.svg?style=flat)](https://www.npmjs.com/package/stylus)
+[![Repo Dependents](https://badgen.net/github/dependents-repo/stylus/stylus)](https://github.com/stylus/stylus/network/dependents)
+[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/stylus/stylus)
+
+本备忘单旨在快速理解 [stylus](https://github.com/stylus/stylus) 所涉及的主要概念，显示了它的常用方法使用清单
+<!--rehype:style=padding-top: 12px;-->
 
 入门
 ---
@@ -84,6 +90,7 @@ h5 {
 }
 ```
 
+<!-- markdownlint-disable MD051 -->
 另见：下面[Mixins](#混合-Mixins)
 
 ### 变量 Variables
@@ -388,6 +395,7 @@ for i in 1..3
   .text-{i}
     font-size: lookup('font-size-' + i)
 ```
+
 ### 定义检查
 
 ```stylus {1}

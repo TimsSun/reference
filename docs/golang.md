@@ -23,7 +23,7 @@ $ go run hello.go
 Hello, world!
 ```
 
-或者在 [Go repl](https://repl.it/languages/go) 中尝试一下
+或者在 [Go repl](https://repl.it/languages/go) 中尝试一，`go` 命令[参考](#go-命令)
 
 ### 变量
 
@@ -33,6 +33,8 @@ s1 = "Learn Go!"
 // 一次声明多个变量
 var b, c int = 1, 2
 var d = true
+// 匿名赋值
+_ , e = 10, 20 
 ```
 
 简短声明
@@ -70,7 +72,7 @@ func say(message string) {
 多行注释 */
 ```
 
-### 如果语句
+### if 语句
 
 ```go
 if true {
@@ -89,7 +91,7 @@ Golang 基本类型
 s1 := "Hello" + "World"
 s2 := `A "raw" string literal
 can include line breaks.`
-// 输出：11
+// 输出：10
 fmt.Println(len(s1))
 // 输出：Hello
 fmt.Println(string(s1[0:5]))
@@ -126,7 +128,7 @@ isTrue   := true
 isFalse  := false
 ```
 
-#### 操作符 
+#### 操作符
 
 ```go
 fmt.Println(true && true)   // true 
@@ -139,7 +141,6 @@ fmt.Println(!true)          // false
 参见：[更多操作符](#运算符和标点符号)
 
 ### 数组 Arrays
-<!--rehype:wrap-class=row-span-2-->
 
 ```go
 ┌────┬────┬────┬────┬─────┬─────┐
@@ -183,6 +184,7 @@ fmt.Println("2d: ", twoDimension)
 ```
 
 ### 指针(Pointers)
+<!--rehype:wrap-class=col-span-2-->
 
 ```go
 func main () {
@@ -194,9 +196,30 @@ func getPointer () (myPointer *int) {
   a := 234
   return &a
 }
+//申明指针的时候，如果没有指向某个变量，默认值为nil
+//不能直接进行操作，包括读写
+var p *int
+*p = 123      // panic   nil pointer
+```
 
-a := new(int)
-*a = 234
+---
+
+```go
+//而用new返回的是有默认值的指针, 为数据类型的默认值
+func main(){
+  //有一块内存存放了10，它的地址由系统自动分配，别名是a
+  a := 10
+  //内存存放的10变成了20
+  a = 20
+  var p *int
+  p = &a   //或者直接写 p := &a
+  //上面的p是一个指针，通过 *p 的方式同样可以访问 变量a指向 的内存
+
+  /*当你动态申请内存的时候，指针的存在意义之一就被体现出来了*/ 
+  ptr := new(int)   
+  //申请了一块内存空间，没有办法指定别名，new()返回内存地址，用指针接收
+  //此时并没有变量能直接指向这块内存，所以只能通过内存地址来访问
+}
 ```
 
 参见：[指针(Pointers)](https://tour.golang.org/moretypes/1)
@@ -225,10 +248,28 @@ const s string = "constant"
 const Phi = 1.618
 const n = 500000000
 const d = 3e20 / n
-fmt.Println(d)
+```
+
+常量声明可以使用 iota常量生成器 初始化，它用于
+生成一组以相似规则初始化的常量，但是不用每行都
+写一遍初始化表达式。
+注意：
+
+1. 在一个const声明语句中，在第一个声明的常量所在的行，iota被置为0，然后在每一个有常量声明的行加一。
+2. 写在同一行的值是相同的
+
+```go
+const (
+    a = iota
+    b
+    c
+)
+// a = 0, b = 1, c = 2
 ```
 
 ### 类型转换
+
+Go语言中不允许隐式转换，所有类型转换必须显式声明（强制转换），而且转换只能发生在两种相互兼容的类型之间。
 
 ```go
 i := 90
@@ -247,7 +288,6 @@ s := strconv.Itoa(i)
 fmt.Println(s) // Outputs: 90
 ```
 
-
 Golang 字符串
 --------
 
@@ -256,18 +296,18 @@ Golang 字符串
 ```go
 package main
 import (
-	"fmt"
-	s "strings"
+        "fmt"
+        s "strings"
 )
 func main() {
     /* 需要将字符串导入为 s */
-	fmt.Println(s.Contains("test", "e"))
+        fmt.Println(s.Contains("test", "e"))
     /* 内置 */
     fmt.Println(len("hello"))  // => 5
     // 输出: 101
-	fmt.Println("hello"[1])
+        fmt.Println("hello"[1])
     // 输出: e
-	fmt.Println(string("hello"[1]))
+        fmt.Println(string("hello"[1]))
 }
 ```
 
@@ -277,38 +317,38 @@ func main() {
 ```go
 package main
 import (
-	"fmt"
-	"os"
+        "fmt"
+        "os"
 )
 type point struct {
-	x, y int
+        x, y int
 }
 func main() {
-	p := point{1, 2}
-	fmt.Printf("%v\n", p)                        // => {1 2}
-	fmt.Printf("%+v\n", p)                       // => {x:1 y:2}
-	fmt.Printf("%#v\n", p)                       // => main.point{x:1, y:2}
-	fmt.Printf("%T\n", p)                        // => main.point
-	fmt.Printf("%t\n", true)                     // => TRUE
-	fmt.Printf("%d\n", 123)                      // => 123
-	fmt.Printf("%b\n", 14)                       // => 1110
-	fmt.Printf("%c\n", 33)                       // => !
-	fmt.Printf("%x\n", 456)                      // => 1c8
-	fmt.Printf("%f\n", 78.9)                     // => 78.9
-	fmt.Printf("%e\n", 123400000.0)              // => 1.23E+08
-	fmt.Printf("%E\n", 123400000.0)              // => 1.23E+08
-	fmt.Printf("%s\n", "\"string\"")             // => "string"
-	fmt.Printf("%q\n", "\"string\"")             // => "\"string\""
-	fmt.Printf("%x\n", "hex this")               // => 6.86578E+15
-	fmt.Printf("%p\n", &p)                       // => 0xc00002c040
-	fmt.Printf("|%6d|%6d|\n", 12, 345)           // => |    12|   345|
-	fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 3.45)     // => |  1.20|  3.45|
-	fmt.Printf("|%-6.2f|%-6.2f|\n", 1.2, 3.45)   // => |1.20  |3.45  |
-	fmt.Printf("|%6s|%6s|\n", "foo", "b")        // => |   foo|     b|
-	fmt.Printf("|%-6s|%-6s|\n", "foo", "b")      // => |foo   |b     |
-	s := fmt.Sprintf("a %s", "string")
-	fmt.Println(s)
-	fmt.Fprintf(os.Stderr, "an %s\n", "error")
+        p := point{1, 2}
+        fmt.Printf("%v\n", p)                        // => {1 2}
+        fmt.Printf("%+v\n", p)                       // => {x:1 y:2}
+        fmt.Printf("%#v\n", p)                       // => main.point{x:1, y:2}
+        fmt.Printf("%T\n", p)                        // => main.point
+        fmt.Printf("%t\n", true)                     // => TRUE
+        fmt.Printf("%d\n", 123)                      // => 123
+        fmt.Printf("%b\n", 14)                       // => 1110
+        fmt.Printf("%c\n", 33)                       // => !
+        fmt.Printf("%x\n", 456)                      // => 1c8
+        fmt.Printf("%f\n", 78.9)                     // => 78.9
+        fmt.Printf("%e\n", 123400000.0)              // => 1.23E+08
+        fmt.Printf("%E\n", 123400000.0)              // => 1.23E+08
+        fmt.Printf("%s\n", "\"string\"")             // => "string"
+        fmt.Printf("%q\n", "\"string\"")             // => "\"string\""
+        fmt.Printf("%x\n", "hex this")               // => 6.86578E+15
+        fmt.Printf("%p\n", &p)                       // => 0xc00002c040
+        fmt.Printf("|%6d|%6d|\n", 12, 345)           // => |    12|   345|
+        fmt.Printf("|%6.2f|%6.2f|\n", 1.2, 3.45)     // => |  1.20|  3.45|
+        fmt.Printf("|%-6.2f|%-6.2f|\n", 1.2, 3.45)   // => |1.20  |3.45  |
+        fmt.Printf("|%6s|%6s|\n", "foo", "b")        // => |   foo|     b|
+        fmt.Printf("|%-6s|%-6s|\n", "foo", "b")      // => |foo   |b     |
+        s := fmt.Sprintf("a %s", "string")
+        fmt.Println(s)
+        fmt.Fprintf(os.Stderr, "an %s\n", "error")
 }
 ```
 
@@ -316,8 +356,8 @@ func main() {
 
 ### 函数实例
 
-| 实例                           | Result      |
-|-------------------------------|-------------|
+| 实例                          | Result      |
+| ----------------------------- | ----------- |
 | Contains("test", "es")        | true        |
 | Count("test", "t")            | 2           |
 | HasPrefix("test", "te")       | true        |
@@ -402,7 +442,7 @@ for _, num := range nums {
 fmt.Println("sum:", sum)
 ```
 
-### While 循环
+### For 循环
 
 ```go
 i := 1
@@ -432,7 +472,7 @@ for {
 }
 ```
 
-Golang 结构和映射
+Golang 结构和Maps
 --------
 
 ### 定义
@@ -441,16 +481,16 @@ Golang 结构和映射
 ```go
 package main
 import (
-	"fmt"
+        "fmt"
 )
 type Vertex struct {
-	X int
-	Y int
+        X int
+        Y int
 }
 func main() {
-	v := Vertex{1, 2}
-	v.X = 4
-	fmt.Println(v.X, v.Y) // => 4 2
+        v := Vertex{1, 2}
+        v.X = 4
+        fmt.Println(v.X, v.Y) // => 4 2
 }
 ```
 
@@ -468,7 +508,7 @@ v := Vertex{X: 1}
 
 您还可以输入字段名
 
-### 映射
+### Maps
 <!--rehype:wrap-class=row-span-2-->
 
 ```go
@@ -512,7 +552,7 @@ fmt.Println(plus(1, 2))
 fmt.Println(plusPlus(1, 2, 3))
 ```
 
-### 多次返回
+### 多返回值
 
 ```go
 func vals() (int, int) {
@@ -534,7 +574,7 @@ r1, r2 := func() (string, string) {
 fmt.Println(r1, r2)
 ```
 
-### 命名返回
+### 命名返回值
 
 ```go
 func split(sum int) (x, y int) {
@@ -547,7 +587,7 @@ fmt.Println(x)   // => 7
 fmt.Println(y)   // => 10
 ```
 
-### 变量函数
+### 可变参数函数
 
 ```go
 func sum(nums ...int) {
@@ -558,10 +598,12 @@ func sum(nums ...int) {
   }
   fmt.Println(total)
 }
-sum(1, 2)     //=> [1 2] 3
+sum(1, 2)     // => [1 2] 3
 sum(1, 2, 3)  // => [1 2 3] 6
 nums := []int{1, 2, 3, 4}
 sum(nums...)  // => [1 2 3 4] 10
+// 不定参在内存中是连续存储的
+// 不定参内部再传递的时候，参数也要是不定的
 ```
 
 ### 初始化函数
@@ -569,6 +611,7 @@ sum(nums...)  // => [1 2 3 4] 10
 ```go
 import --> const --> var --> init()
 ```
+
 ---
 
 ```go
@@ -597,20 +640,8 @@ func main() {
 }
 ```
 
-### 关闭 1
-
-```go
-func scope() func() int{
-  outer_var := 2
-  foo := func() int {return outer_var}
-  return foo
-}
-// Outpus: 2
-fmt.Println(scope()())
-```
-
-### 关闭 2
-
+### 闭包
+<!--rehype:wrap-class=col-span-2 row-span-2-->
 ```go
 func outer() (func() int, int) {
     outer_var := 2
@@ -622,8 +653,25 @@ func outer() (func() int, int) {
     return inner, outer_var
 }
 inner, val := outer()
-fmt.Println(inner()) // => 200
-fmt.Println(val)     // => 101
+fmt.Println(val)
+// => 101
+fmt.Println(inner())
+// => 200，这里涉及到golang中闭包和内存逃逸的概念，inner()实际上执行了两次，outer()中一次，fmt又一次，
+//但为什么是200呢，编译器不能确定outer_var在后续会不会使用，
+//所以outer_var不会随着outer()结束而释放它的栈（Stack）空间，
+//而会‘逃逸到’堆（Heap）上，那么第二次的inner()中outer_var就会是101。
+```
+
+### 关闭 1
+
+```go
+func scope() func() int{
+  outer_var := 2
+  foo := func() int {return outer_var}
+  return foo
+}
+// Outpus: 2
+fmt.Println(scope()())
 ```
 
 Golang 包(Packages)
@@ -701,22 +749,22 @@ Golang 并发
 ```go
 package main
 import (
-	"fmt"
-	"time"
+    "fmt"
+    "time"
 )
 func f(from string) {
-	for i := 0; i < 3; i++ {
-		fmt.Println(from, ":", i)
-	}
+    for i := 0; i < 3; i++ {
+            fmt.Println(from, ":", i)
+    }
 }
 func main() {
-	f("direct")
-	go f("goroutine")
-	go func(msg string) {
-		fmt.Println(msg)
-	}("going")
-	time.Sleep(time.Second)
-	fmt.Println("done")
+    f("direct")
+    go f("goroutine")
+    go func(msg string) {
+            fmt.Println(msg)
+    }("going")
+    time.Sleep(time.Second)
+    fmt.Println("done")
 }
 ```
 
@@ -725,26 +773,26 @@ func main() {
 ### WaitGroup
 <!--rehype:wrap-class=row-span-2-->
 
-```golang
+```go
 package main
 import (
-	"fmt"
-	"sync"
-	"time"
+    "fmt"
+    "sync"
+    "time"
 )
 func w(id int, wg *sync.WaitGroup) {
-	defer wg.Done()
-	fmt.Printf("%d starting\n", id)
-	time.Sleep(time.Second)
-	fmt.Printf("%d done\n", id)
+    defer wg.Done()
+    fmt.Printf("%d starting\n", id)
+    time.Sleep(time.Second)
+    fmt.Printf("%d done\n", id)
 }
 func main() {
-	var wg sync.WaitGroup
-	for i := 1; i <= 5; i++ {
-		wg.Add(1)
-		go w(i, &wg)
-	}
-	wg.Wait()
+    var wg sync.WaitGroup
+    for i := 1; i <= 5; i++ {
+            wg.Add(1)
+            go w(i, &wg)
+    }
+    wg.Wait()
 }
 ```
 
@@ -835,8 +883,21 @@ Golang 方法(Methods)
 <!--rehype:body-class=cols-2-->
 
 ### 接收器
-
+<!--rehype:wrap-class=row-span-2-->
 ```go
+//Go语言中的方法（Method）是一种作用于特定类型变量的函数。
+//这种特定类型变量叫做接收者（Receiver）。
+//接收者的概念就类似于其他语言中的 this 或者 self。
+//方法的定义格式如下：
+func (接收者变量 接收者类型) 方法名(参数列表) (返回参数) {
+    函数体
+}
+// 其中，
+//     1.接收者变量：接收者中的参数变量名在命名时，官方建议使用接收者类型名
+//的第一个小写字母，而不是self、this之类的命名。例如，Person类型的接收者变量
+// 应该命名为 p，Connector类型的接收者变量应该命名为c等。
+//     2.接收者类型：接收者类型和参数类似，可以是指针类型和非指针类型。
+//     3.方法名、参数列表、返回参数：具体格式与函数定义相同。
 type Vertex struct {
   X, Y float64
 }
@@ -844,27 +905,82 @@ type Vertex struct {
 func (v Vertex) Abs() float64 {
   return math.Sqrt(v.X * v.X + v.Y * v.Y)
 }
+func (v Vertex) valuechange() float64 {
+  v.X += 1
+  return v.X
+}
+func (v *Vertex) pointerchange() float64 {
+  v.X += 1
+  return v.X
+}
+func main() {
+  v := Vertex{1, 2}
+  v.Abs()
 
-v := Vertex{1, 2}
-v.Abs()
+  v = Vertex{1, 2}
+  fmt.Println(v.valuechange())  // 2
+  fmt.Println(v)                // {1 2}
+
+  v = Vertex{1, 2}
+  fmt.Println(v.pointerchange())// 2
+  fmt.Println(v)                // {2 2}
+}
+//如果在方法里修改receiver的值要对caller生效，使用 pointer receiver。
+
 ```
 
-参见：[Methods](https://tour.golang.org/methods/1)
+参见：[Methods](https://tour.golang.org/methods/1)，[指针接收器](https://tour.golang.org/methods/4)
 
-### Mutation
+### 方法表达式
+
+方法表达式相当于提供一种语法将类型方法调用显式地转换为函数调用，接收者(receiver)必须显式地传递进去。
 
 ```go
-func (v *Vertex) Scale(f float64) {
-  v.X = v.X * f
-  v.Y = v.Y * f
+func (t T) Get(){
+    return t.a
 }
-
-v := Vertex{6, 12}
-v.Scale(0.5)
-// `v` 已更新
+func (t *T) Set(i int){
+    t.a = i
+}
+//表达式`T.Get`和`(*T).Set`被称为方法表达式，
+//需要注意的是在方法表达式中编译器不会做自动转换。
+//值调用会自动转换，表达式调用则不会，例如：
+type Data struct{}
+func (Data) TestValue () {}
+func (*Data) TestPointer () {} 
+//声明一个类型变量a
+var a Data= struct{}{}
+//表达式调用编译器不会进行自动转换
+Data.TestValue(a) 
+//Data.TestValue(&a) 
+(*Data).TestPointer (&a) 
+//Data.TestPointer(&a) //type Data has no method TestPointer 
+//值调用编译器会进行自动转换
+y : = (&a).TestValue //编译器帮助转换a.TestValue
+g : = a.TestPointer //会转换为(&a).TestPointer 
 ```
 
-参见：[指针接收器](https://tour.golang.org/methods/4)
+#### 组合结构的方法集
+
+内嵌字段的访问不需要使用全路径，只要保证命名是唯一的就可以，尽量避免同名。如果外层字段和内层字段有相同的方法，则使用简化模式访问外层方法会覆盖内层的方法。
+
+```go
+x : = X{a: 1} 
+y : = Y{ 
+    X : x , 
+    b : 2 , 
+}
+z : = z { 
+    Y : y , 
+    c : 3 ,
+}//组合结构，内嵌字段
+```
+
+组合结构的方法集有如下规则：
+
+- 若类型 T 包含匿名字段 S ，则 T 的方法集包含S的方法集
+- 若类型 T 包含匿名字段 *S ，则 T 的方法集包含 S 和*S方法集
+- 不管类型 T 中嵌入的匿名字段是 S 还是 *S ，*T 方法集总是包含 S 和 *S 方法集
 
 Golang 接口(Interfaces)
 --------
@@ -916,6 +1032,7 @@ func main() {
 -------------
 
 ### 关键字(Keywords)
+
 - break
 - default
 - func
@@ -945,22 +1062,71 @@ func main() {
 
 ### 运算符和标点符号
 
-|   |    |     |     |      |    |     |   |   |
-|---|----|-----|-----|------|----|-----|---|---|
-| `+` | &  | +=  | &=  | &&   | == | !=  | ( | ) |
-| `-` | \| | -=  | \|= | \|\| | <  | <=  | [ | ] |
-| `*` | ^  | *=  | ^=  | <-   | >  | >=  | { | } |
-| `/` | << | /=  | <<= | ++   | =  | :=  | , | ; |
-| `%` | >> | %=  | >>= | --   | !  | ... | . | : |
-|   | &^ | &^= |     |      |    |     |   |   |
+|     |      |       |       |        |      |       |     |     |
+| --- | ---- | ----- | ----- | ------ | ---- | ----- | --- | --- |
+| `+` | `&`  | `+=`  | `&=`  | `&&`   | `==` | `!=`  | `(` | `)` |
+| `-` | `\|` | `-=`  | `\|=` | `\|\|` | `<`  | `<=`  | `[` | `]` |
+| `*` | `^`  | `*=`  | `^=`  | `<-`   | `>`  | `>=`  | `{` | `}` |
+| `/` | `<<` | `/=`  | `<<=` | `++`   | `=`  | `:=`  | `,` | `;` |
+| `%` | `>>` | `%=`  | `>>=` | `--`   | `!`  | `...` | `.` | `:` |
+|     | `&^` | `&^=` |       |        |      |       |     |     |
+
+Go 命令
+---
+
+### Go 编译器命令
+
+:- | --
+:- | --
+`go command [参数]`  | go 命令 [参数]
+`go build`          | 编译包和依赖包
+`go clean`          | 移除对象和缓存文件
+`go doc`            | 显示包的文档
+`go env`            | 打印go的环境变量信息
+`go bug`            | 报告bug
+`go fix`            | 更新包使用新的api
+`go fmt`            | 格式规范化代码
+`go generate`       | 通过处理资源生成go文件
+`go get`            | 下载并安装包及其依赖
+`go install`        | 编译和安装包及其依赖
+`go list`           | 列出所有包
+`go run`            | 编译和运行go程序
+`go test`           | 测试
+`go tool`           | 运行给定的go工具
+`go version`        | 显示go当前版本
+`go vet`            | 发现代码中可能的错误
+
+### ENV
+
+:- | --
+:- | --
+`GOOS`         | 编译系统
+`GOARCH`       | 编译arch
+`GO111MODULE`  | gomod开关
+`GOPROXY`      | go代理 <https://goproxy.io>  <https://goproxy.cn>  <https://mirrors.aliyun.com/goproxy/>
+`GOSSAFUNC`    | 生成 `SSA.html` 文件，展示代码优化的每一步 `GOSSAFUNC=func_name go build`
+<!--rehype:className=style-list-arrow-->
+
+### Module
+
+:- | --
+:- | --
+`go mod init`         | 初始化当前文件夹，创建go.mod文件
+`go mod download`     | 下载依赖的module到本地
+`go mod tidy`         | 增加缺少的module，删除无用的module
+`go mod vendor`       | 将依赖复制到vendor下
+文件 `go.mod`          |  依赖列表和版本约束
+文件 `go.sum`          |  记录 `module` 文件 `hash` 值，用于安全校验
+<!--rehype:className=style-list-arrow-->
 
 另见
 --------
-- [Devhints](https://devhints.io/go) _(devhints.io)_
-- [A tour of Go](https://tour.golang.org/welcome/1) _(tour.golang.org)_
-- [Golang wiki](https://github.com/golang/go/wiki/) _(github.com)_
-- [Effective Go](https://golang.org/doc/effective_go.html) _(golang.org)_
-- [Go by Example](https://gobyexample.com/) _(gobyexample.com)_
-- [Awesome Go](https://awesome-go.com/) _(awesome-go.com)_
-- [JustForFunc Youtube](https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw) _(youtube.com)_
-- [Style Guide](https://github.com/golang/go/wiki/CodeReviewComments) _(github.com)_
+
+- [Devhints](https://devhints.io/go) *(devhints.io)*
+- [A tour of Go](https://tour.golang.org/welcome/1) *(tour.golang.org)*
+- [Golang wiki](https://github.com/golang/go/wiki/) *(github.com)*
+- [Effective Go](https://golang.org/doc/effective_go.html) *(golang.org)*
+- [Go by Example](https://gobyexample.com/) *(gobyexample.com)*
+- [Awesome Go](https://awesome-go.com/) *(awesome-go.com)*
+- [JustForFunc Youtube](https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw) *(youtube.com)*
+- [Style Guide](https://github.com/golang/go/wiki/CodeReviewComments) *(github.com)*

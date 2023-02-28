@@ -1,7 +1,7 @@
-Vue2 备忘清单
+Vue 2 备忘清单
 ===
 
-渐进式 JavaScript 框架 Vue 2 备忘清单的快速参考列表，包含常用 API 和示例。
+渐进式 JavaScript 框架 [Vue 2](https://v2.cn.vuejs.org/) 备忘清单的快速参考列表，包含常用 API 和示例。
 
 入门
 ---
@@ -10,15 +10,20 @@ Vue2 备忘清单
 
 Vue 是一套用于构建用户界面的渐进式框架
 
-- [Vue 2.x 官方文档](https://v2.cn.vuejs.org/)
-- [Vue Router 3.x 官方文档](https://v3.router.vuejs.org/)
+- [Vue 2.x 官方文档](https://v2.cn.vuejs.org/) _(v2.cn.vuejs.org)_
+- [Vue Router 3.x 官方文档](https://v3.router.vuejs.org/) _(v3.router.vuejs.org)_
+- [Vue 3 备忘清单](./vue.md)
 <!--rehype:className=style-round-->
 
-#### 快速创建 **Vue** 项目 ([Vue CLI](https://cli.vuejs.org/zh/guide/creating-a-project.html)) 
+注意：Vue 2.x 版本对应 Vue Router 3.x 路由版本
+
+#### 快速创建 **Vue** 项目
 
 ```bash
 npx @vue/cli create hello-world
 ```
+
+参考: [Vue CLI](https://cli.vuejs.org/zh/guide/creating-a-project.html) 创建一个项目
 
 ### 声明式渲染
 
@@ -274,7 +279,7 @@ var app6 = new Vue({
 <a v-on:[eventName]="doSomething">...</a>
 ```
 
-当 `eventName` 的值为 `focus` 时，`v-on:[eventName]` 将等价于 `v-on:focus` 
+当 `eventName` 的值为 `focus` 时，`v-on:[eventName]` 将等价于 `v-on:focus`
 
 ### 指令修饰符
 
@@ -547,7 +552,6 @@ data: {
 </ul>
 ```
 
-
 ```js
 var example1 = new Vue({
   el: '#example-1',
@@ -652,6 +656,8 @@ Jane Doe
 </ul>
 <p v-else>No todos left!</p>
 ```
+
+注意: `v-for` 和 `v-if` 不推荐一起使用[参考官方文档](https://v2.cn.vuejs.org/v2/guide/conditional.html#v-if-与-v-for-一起使用)
 
 ### 组件上使用 v-for
 
@@ -992,7 +998,7 @@ computed: {
 <span>Checked names: {{ checkedNames }}</span>
 ```
 
-如下 data 
+如下 data
 
 ```js
 new Vue({
@@ -1003,7 +1009,7 @@ new Vue({
 })
 ```
 
-### 单选按钮 
+### 单选按钮
 
 ```html
 <div id="example-4">
@@ -1192,6 +1198,7 @@ vm.selected.number // => 123
 <!--rehype:wrap-class=row-span-3-->
 
 - 将 `HTML`/`CSS`/`JS` 三部分存放到一个 `Hello.vue` 文件中
+
   ```html
   <template>
     <p>{{ title }} World!</p>
@@ -1219,7 +1226,9 @@ vm.selected.number // => 123
     }
   </style>
   ```
+
 - 使用 `Hello.vue` 组件
+
   ```html
   <script>
     import Vue from "vue";
@@ -1678,7 +1687,7 @@ Vue.component('alert-box', {
 `leave-active-class` | [#](https://v2.cn.vuejs.org/v2/guide/transitions.html#自定义过渡的类名)
 `leave-to-class` _(2.1.8+)_ | [#](https://v2.cn.vuejs.org/v2/guide/transitions.html#自定义过渡的类名)
 
-----
+---
 
 ```html
 <transition
@@ -2023,7 +2032,6 @@ Vue 2 API 参考
 `v-on:click.passive` _(2.3.0)_ [#](https://v2.cn.vuejs.org/v2/api/#v-on) | 以 { passive: true } 模式添加侦听器
 <!--rehype:className=style-list-->
 
-
 ### v-on (鼠标)修饰符
 
 :- | :-
@@ -2049,7 +2057,7 @@ Vue 2 API 参考
 :- | :-
 `v-on:keyup.enter` | [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
 `v-on:keyup.tab` | [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
-`v-on:keyup.delete ` | 捕获“删除”和“退格”键 [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
+`v-on:keyup.delete` | 捕获“删除”和“退格”键 [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
 `v-on:keyup.esc` | [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
 `v-on:keyup.space` | [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)
 `v-on:keyup.up` | [#](https://v2.cn.vuejs.org/v2/guide/events.html#按键修饰符)

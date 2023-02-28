@@ -39,7 +39,6 @@ $ find . -name "json_*"
 | `-mindepth` | find / -mindepth 3 -maxdepth 5 -name pass | 在子目录级别 2 和 4 之间 |
 <!--rehype:className=show-header-->
 
-
 ### 类型
 
 |           |                      |
@@ -197,11 +196,11 @@ $ find /home -user tecmint -iname "*.txt"
 ### 多个文件名
 
 ```shell
-$ find . -type f \( -name "*.sh" -o -name "*.txt" \)
+$ find . -type f \( -name "*.sh" -or -name "*.txt" \)
 ```
 <!--rehype:className=wrap-text -->
 
-查找带有 `.sh` 和 `.txt` 扩展名的文件
+查找带有 `.sh` 或 `.txt` 扩展名的文件
 
 ### 多个目录
 
@@ -223,7 +222,6 @@ $ find . -type d -empty
 ```shell
 $ find . -type f -empty -delete
 ```
-
 
 查找日期和时间
 -------------
@@ -389,4 +387,12 @@ $ find / -type d -perm 777 -print -exec chmod 755 {} \;
 ```shell
 $ find . -type f -name "*.java" | xargs tar cvf myfile.tar
 $ find . -type f -name "*.java" | xargs tar rvf myfile.tar
+```
+
+### 查找并排除目录
+
+查找当前目录及子目录中的所有`js`文件，但是排除掉`node_modules`目录中的
+
+```shell
+$ find . -type f -name "*.js" -not -path "./node_modules/*"
 ```

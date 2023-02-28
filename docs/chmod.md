@@ -107,7 +107,6 @@ d  rwx  r-x  r-x
 | `a`         | 全部，和 ugo 一样 |
 <!--rehype:className=show-header-->
 
-
 ### 权限
 
 | 缩写 | 权限    | 值 |
@@ -137,7 +136,6 @@ Chmod 示例
 | `+`    | 添加         |
 | `-`    | 删除      |
 | `=`    | 设置        |
-
 
 ### chmod 600
 
@@ -277,7 +275,8 @@ $ find /path -type f -exec chmod 644 {} \;
 * [使用 chmod 修改文件权限](https://www.linode.com/docs/guides/modify-file-permissions-with-chmod/) _(linode.com)_
 
 <!--rehype:ignore:start-->
-### 以下是 Chmod 生成器 JS 代码（代码用于网站请忽略不要删除）
+以下是 Chmod 生成器 JS 代码（代码用于网站请忽略不要删除）
+---
 <!--rehype:ignore:end-->
 
 ```html preview

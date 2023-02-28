@@ -1,7 +1,7 @@
 NGINX 备忘清单
 ===
 
-这个 nginx 快速参考备忘单显示了它的常用命和配置使用清单。
+这个 [nginx](https://nginx.org/en/) 快速参考备忘单显示了它的常用命和配置使用清单。
 
 入门
 ----
@@ -208,7 +208,7 @@ location /folder/ { # / 很重要！
 ### 反向代理
 <!--rehype:wrap-class=row-span-3-->
 
-#### 基础 
+#### 基础
 
 ```nginx
 server {
@@ -260,7 +260,7 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Host $host;
-	
+ 
   }
 }
 ```
@@ -312,7 +312,6 @@ server {
 ```
 
 您可以使用 Let's Encrypt 轻松保护您的网站/应用程序。去 [lets-encrypt](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html) 获取更多信息
-
 
 ### 重定向(301永久)
 <!--rehype:wrap-class=row-span-2-->
@@ -867,4 +866,4 @@ location = /robots.txt {
 ---
 
 - [Nginx 安装维护入门学习笔记](https://jaywcjlove.github.io/nginx-tutorial) _(jaywcjlove.github.io)_
-- [](https://virtubox.github.io/advanced-nginx-cheatsheet/) _(virtubox.github.io)_
+- [advanced-nginx-cheatsheet](https://virtubox.github.io/advanced-nginx-cheatsheet/) _(virtubox.github.io)_
